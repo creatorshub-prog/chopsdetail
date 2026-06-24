@@ -1,0 +1,1556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Chop's Mobile Detailing | Virginia Beach, VA</title>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --black: #0a0a0a;
+      --deep: #111214;
+      --card: #161819;
+      --border: #252729;
+      --gold: #C9A84C;
+      --gold-light: #e0bc6e;
+      --white: #F5F4F0;
+      --muted: #8a8a8a;
+      --red: #C0392B;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: 'Barlow', sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 48px;
+      height: 72px;
+      background: rgba(10,10,10,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 22px;
+      font-weight: 900;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--white);
+      text-decoration: none;
+    }
+
+    .nav-logo span { color: var(--gold); }
+
+    .nav-links {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover, .nav-links a.active { color: var(--gold); }
+
+    .nav-cta {
+      background: var(--gold);
+      color: var(--black) !important;
+      padding: 10px 22px;
+      border-radius: 3px;
+      font-weight: 600 !important;
+      color: var(--black);
+    }
+
+    .nav-cta:hover { background: var(--gold-light) !important; color: var(--black) !important; }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--white);
+      transition: all 0.3s;
+    }
+
+    /* ── PAGES ── */
+    .page { display: none; padding-top: 72px; min-height: 100vh; }
+    .page.active { display: block; }
+
+    /* ── HOME HERO ── */
+    .hero {
+      position: relative;
+      height: calc(100vh - 72px);
+      min-height: 560px;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      background: var(--black);
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, #0a0a0a 0%, #111214 40%, #1a1207 100%);
+    }
+
+    .hero-accent {
+      position: absolute;
+      top: -100px;
+      right: -100px;
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(201,168,76,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-lines {
+      position: absolute;
+      inset: 0;
+      opacity: 0.04;
+      background-image: repeating-linear-gradient(
+        90deg, transparent, transparent 80px, var(--gold) 80px, var(--gold) 81px
+      );
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      padding: 0 80px;
+      max-width: 900px;
+    }
+
+    .hero-eyebrow {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .hero-eyebrow::before {
+      content: '';
+      display: block;
+      width: 32px;
+      height: 2px;
+      background: var(--gold);
+    }
+
+    h1 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(52px, 8vw, 100px);
+      font-weight: 900;
+      line-height: 0.92;
+      text-transform: uppercase;
+      letter-spacing: -0.01em;
+      margin-bottom: 28px;
+    }
+
+    h1 em {
+      font-style: normal;
+      color: var(--gold);
+      -webkit-text-stroke: 0px;
+    }
+
+    h1 .outline {
+      -webkit-text-stroke: 2px var(--white);
+      color: transparent;
+    }
+
+    .hero-sub {
+      font-size: 18px;
+      color: var(--muted);
+      max-width: 480px;
+      margin-bottom: 44px;
+      line-height: 1.7;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--gold);
+      color: var(--black);
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 16px 32px;
+      border-radius: 3px;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.15s;
+    }
+
+    .btn-primary:hover { background: var(--gold-light); transform: translateY(-1px); }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--white);
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 16px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-bottom: 2px solid var(--border);
+      padding-bottom: 2px;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .btn-secondary:hover { border-color: var(--gold); color: var(--gold); }
+
+    .hero-stats {
+      position: absolute;
+      bottom: 48px;
+      right: 80px;
+      display: flex;
+      gap: 48px;
+    }
+
+    .stat {
+      text-align: right;
+    }
+
+    .stat-num {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 48px;
+      font-weight: 900;
+      color: var(--gold);
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* ── SECTION SHARED ── */
+    section {
+      padding: 96px 80px;
+    }
+
+    .section-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 16px;
+    }
+
+    h2 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(36px, 5vw, 60px);
+      font-weight: 900;
+      text-transform: uppercase;
+      line-height: 1;
+      margin-bottom: 20px;
+    }
+
+    .section-intro {
+      color: var(--muted);
+      max-width: 540px;
+      margin-bottom: 60px;
+      font-size: 17px;
+      line-height: 1.7;
+    }
+
+    /* ── SERVICES STRIP ── */
+    .services-strip {
+      background: var(--deep);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 0 80px;
+      overflow-x: auto;
+    }
+
+    .services-row {
+      display: flex;
+      gap: 0;
+      min-width: max-content;
+    }
+
+    .service-chip {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 24px 40px;
+      border-right: 1px solid var(--border);
+      white-space: nowrap;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      transition: color 0.2s;
+    }
+
+    .service-chip:hover { color: var(--white); }
+
+    .service-chip .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--gold);
+      flex-shrink: 0;
+    }
+
+    /* ── PACKAGES ── */
+    .packages-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .package-card {
+      background: var(--card);
+      padding: 40px 36px;
+      position: relative;
+      transition: background 0.2s;
+    }
+
+    .package-card:hover { background: #1c1e20; }
+
+    .package-card.featured {
+      background: #161207;
+      border: 2px solid var(--gold);
+      margin: -2px;
+      z-index: 1;
+    }
+
+    .package-badge {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: var(--gold);
+      color: var(--black);
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 2px;
+    }
+
+    .package-name {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 22px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 4px;
+      color: var(--gold);
+    }
+
+    .package-subtitle {
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 28px;
+    }
+
+    .package-features {
+      list-style: none;
+      margin-bottom: 32px;
+    }
+
+    .package-features li {
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 14px;
+      color: #ccc;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .package-features li::before {
+      content: '✓';
+      color: var(--gold);
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .package-pricing {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 28px;
+    }
+
+    .price-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 14px;
+    }
+
+    .price-row span:first-child { color: var(--muted); }
+    .price-row span:last-child {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      color: var(--white);
+      font-size: 16px;
+    }
+
+    .btn-book {
+      display: block;
+      text-align: center;
+      background: transparent;
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 14px;
+      border-radius: 3px;
+      text-decoration: none;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .btn-book:hover, .package-card.featured .btn-book {
+      background: var(--gold);
+      color: var(--black);
+    }
+
+    /* ── ADD-ONS ── */
+    .addons-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-top: 48px;
+    }
+
+    .addon-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      padding: 28px 24px;
+    }
+
+    .addon-name {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 17px;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .addon-price {
+      color: var(--gold);
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 22px;
+      font-weight: 900;
+    }
+
+    .addon-note {
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    /* ── HOURS BAND ── */
+    .hours-band {
+      background: var(--deep);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 64px 80px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 48px;
+      flex-wrap: wrap;
+    }
+
+    .hours-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 36px;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .hours-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px 48px;
+    }
+
+    .hours-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 24px;
+      font-size: 15px;
+    }
+
+    .hours-row .day { color: var(--muted); }
+    .hours-row .time { font-weight: 600; }
+
+    /* ── ABOUT PAGE ── */
+    .about-hero {
+      padding: 80px 80px 60px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .about-body p {
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1.8;
+      margin-bottom: 20px;
+    }
+
+    .about-img-block {
+      position: relative;
+    }
+
+    .about-img-frame {
+      width: 100%;
+      aspect-ratio: 4/5;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .about-img-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .about-img-accent {
+      position: absolute;
+      bottom: -20px;
+      right: -20px;
+      width: 120px;
+      height: 120px;
+      background: var(--gold);
+      border-radius: 3px;
+      z-index: -1;
+    }
+
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 2px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      margin-top: 60px;
+    }
+
+    .value-card {
+      background: var(--card);
+      padding: 36px 32px;
+    }
+
+    .value-icon {
+      font-size: 28px;
+      margin-bottom: 16px;
+    }
+
+    .value-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .value-desc {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    /* ── CONTACT PAGE ── */
+    .contact-layout {
+      padding: 80px;
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 80px;
+      align-items: start;
+    }
+
+    .contact-info h2 { margin-bottom: 24px; }
+
+    .contact-detail {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      margin-bottom: 32px;
+    }
+
+    .contact-detail-icon {
+      width: 44px;
+      height: 44px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    .contact-detail-text .label {
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+
+    .contact-detail-text .value {
+      font-size: 17px;
+      font-weight: 500;
+    }
+
+    .contact-detail-text a {
+      color: var(--white);
+      text-decoration: none;
+    }
+
+    .contact-detail-text a:hover { color: var(--gold); }
+
+    .contact-form {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 48px;
+    }
+
+    .form-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 28px;
+      font-weight: 900;
+      text-transform: uppercase;
+      margin-bottom: 32px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      background: var(--deep);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      color: var(--white);
+      font-family: 'Barlow', sans-serif;
+      font-size: 15px;
+      padding: 14px 16px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: var(--gold);
+    }
+
+    .form-group select option { background: var(--deep); }
+
+    .form-group textarea { resize: vertical; min-height: 120px; }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .form-submit {
+      width: 100%;
+      background: var(--gold);
+      color: var(--black);
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 16px;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+      margin-top: 8px;
+      transition: background 0.2s;
+    }
+
+    .form-submit:hover { background: var(--gold-light); }
+
+    .form-success {
+      display: none;
+      text-align: center;
+      padding: 32px;
+    }
+
+    .form-success .check {
+      font-size: 48px;
+      margin-bottom: 16px;
+    }
+
+    .form-success h3 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 24px;
+      font-weight: 900;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 12px;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--deep);
+      border-top: 1px solid var(--border);
+      padding: 48px 80px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 24px;
+    }
+
+    .footer-logo {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 20px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .footer-logo span { color: var(--gold); }
+
+    .footer-copy {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .footer-phone {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--gold);
+      text-decoration: none;
+      letter-spacing: 0.04em;
+    }
+
+    .footer-phone:hover { color: var(--gold-light); }
+
+    /* ── MOBILE NAV MENU ── */
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 72px;
+      left: 0;
+      right: 0;
+      background: var(--deep);
+      border-bottom: 1px solid var(--border);
+      padding: 24px 32px;
+      z-index: 99;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .mobile-menu.open { display: flex; }
+
+    .mobile-menu a {
+      color: var(--muted);
+      text-decoration: none;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border);
+      transition: color 0.2s;
+    }
+
+    .mobile-menu a:hover { color: var(--gold); }
+
+    /* ── PAINT CORRECTION ── */
+    .paint-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      margin-top: 48px;
+    }
+
+    .paint-card {
+      background: var(--card);
+      padding: 40px 36px;
+    }
+
+    .paint-stage {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 12px;
+    }
+
+    .paint-name {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 22px;
+      font-weight: 900;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .paint-desc {
+      font-size: 14px;
+      color: var(--muted);
+      margin-bottom: 28px;
+      line-height: 1.6;
+    }
+
+    .paint-prices {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .paint-price-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 14px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .paint-price-row span:first-child { color: var(--muted); }
+    .paint-price-row span:last-child {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 16px;
+    }
+
+    /* ── NOTICE BANNER ── */
+    .notice-banner {
+      background: var(--gold);
+      color: var(--black);
+      text-align: center;
+      padding: 14px 32px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-top: 72px;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      nav { padding: 0 24px; }
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+
+      section { padding: 64px 24px; }
+      .hero-content { padding: 0 24px; }
+      .hero-stats { right: 24px; bottom: 24px; gap: 24px; }
+      .stat-num { font-size: 32px; }
+
+      .services-strip { padding: 0 24px; }
+      .hours-band { padding: 48px 24px; }
+
+      .about-hero { grid-template-columns: 1fr; padding: 48px 24px; gap: 40px; }
+      .contact-layout { grid-template-columns: 1fr; padding: 48px 24px; gap: 40px; }
+      .contact-form { padding: 32px 24px; }
+      .form-row { grid-template-columns: 1fr; }
+
+      footer { padding: 32px 24px; flex-direction: column; align-items: flex-start; }
+
+      .notice-banner { margin-top: 72px; font-size: 13px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="main-nav">
+  <a href="#" class="nav-logo" onclick="showPage('home')">CHOP'S <span>DETAIL</span></a>
+  <ul class="nav-links">
+    <li><a href="#" onclick="showPage('home')" id="nav-home" class="active">Home</a></li>
+    <li><a href="#" onclick="showPage('about')" id="nav-about">About</a></li>
+    <li><a href="#" onclick="showPage('services')" id="nav-services">Services</a></li>
+    <li><a href="#" onclick="showPage('contact')" id="nav-contact">Contact</a></li>
+    <li><a href="https://clienthub.getjobber.com/hubs/233a1a24-1848-47b3-af03-62f3a54d9aad/public/requests/4813943/new" target="_blank" class="nav-cta">Book Now</a></li>
+  </ul>
+  <div class="hamburger" onclick="toggleMenu()" id="hamburger">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobile-menu">
+  <a href="#" onclick="showPage('home');toggleMenu()">Home</a>
+  <a href="#" onclick="showPage('about');toggleMenu()">About</a>
+  <a href="#" onclick="showPage('services');toggleMenu()">Services</a>
+  <a href="#" onclick="showPage('contact');toggleMenu()">Contact</a>
+  <a href="https://clienthub.getjobber.com/hubs/233a1a24-1848-47b3-af03-62f3a54d9aad/public/requests/4813943/new" target="_blank">Book Appointment →</a>
+</div>
+
+<!-- ══════════════ HOME PAGE ══════════════ -->
+<div id="page-home" class="page active">
+
+  <div class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-accent"></div>
+    <div class="hero-lines"></div>
+    <div class="hero-content">
+      <div class="hero-eyebrow">Virginia Beach · Hampton Roads · 757 Area</div>
+      <h1>We Come<br>To <em>You.</em><br><span class="outline">Detail.</span></h1>
+      <p class="hero-sub">Professional mobile auto detailing delivered to your home or office. Showroom-quality results — no shop, no waiting, no hassle.</p>
+      <div class="hero-actions">
+        <a href="https://clienthub.getjobber.com/hubs/233a1a24-1848-47b3-af03-62f3a54d9aad/public/requests/4813943/new" target="_blank" class="btn-primary">Book Your Detail →</a>
+        <a href="#" onclick="showPage('services')" class="btn-secondary">View Packages</a>
+      </div>
+    </div>
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-num">757</div>
+        <div class="stat-label">Area Code</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">5★</div>
+        <div class="stat-label">Rated Service</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Services strip -->
+  <div class="services-strip">
+    <div class="services-row">
+      <div class="service-chip"><span class="dot"></span>Full Interior & Exterior</div>
+      <div class="service-chip"><span class="dot"></span>Shampoo & Steam Clean</div>
+      <div class="service-chip"><span class="dot"></span>Maintenance Wash</div>
+      <div class="service-chip"><span class="dot"></span>Wash & Wax</div>
+      <div class="service-chip"><span class="dot"></span>Paint Correction</div>
+      <div class="service-chip"><span class="dot"></span>Ceramic Coating</div>
+      <div class="service-chip"><span class="dot"></span>Leather Conditioning</div>
+      <div class="service-chip"><span class="dot"></span>Clay Bar Treatment</div>
+    </div>
+  </div>
+
+  <!-- Why Chop's -->
+  <section>
+    <div class="section-label">Why Choose Us</div>
+    <h2>Detail That Comes to You</h2>
+    <p class="section-intro">We bring a full professional setup directly to your driveway, parking lot, or workplace. No drop-offs. No waiting around. Just results.</p>
+    <div class="values-grid" style="margin-top:0">
+      <div class="value-card">
+        <div class="value-icon">🚗</div>
+        <div class="value-title">Fully Mobile</div>
+        <div class="value-desc">We come to you anywhere in the 757 Hampton Roads area. All equipment and supplies included — zero effort on your end.</div>
+      </div>
+      <div class="value-card">
+        <div class="value-icon">🧤</div>
+        <div class="value-title">Premium Products</div>
+        <div class="value-desc">Scratch-free microfiber mitts, foam spray, UV protectants, and professional-grade wax. Your car gets the best, every time.</div>
+      </div>
+      <div class="value-card">
+        <div class="value-icon">⭐</div>
+        <div class="value-title">5-Star Results</div>
+        <div class="value-desc">Every vehicle is treated like it's our own. We don't cut corners — we earn the review by doing the job right.</div>
+      </div>
+      <div class="value-card">
+        <div class="value-icon">📅</div>
+        <div class="value-title">Easy Booking</div>
+        <div class="value-desc">Book online or call/text to schedule. We work around your availability, not the other way around.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Quick packages preview -->
+  <section style="padding-top:0">
+    <div class="section-label">Our Packages</div>
+    <h2>Pick Your Package</h2>
+    <p class="section-intro">From a quick maintenance wash to a full restoration detail — we have a package for every need and budget.</p>
+    <div class="packages-grid">
+      <div class="package-card">
+        <div class="package-name">Maintenance Wash</div>
+        <div class="package-subtitle">Exterior only</div>
+        <ul class="package-features">
+          <li>Scratch-free microfiber hand wash</li>
+          <li>Foam spray treatment</li>
+          <li>Rim, tire & fender well clean</li>
+          <li>Bug & tar removal</li>
+          <li>Tire shine</li>
+        </ul>
+        <div class="package-pricing">
+          <div class="price-row"><span>Sedan</span><span>$75</span></div>
+          <div class="price-row"><span>SUV</span><span>$85</span></div>
+          <div class="price-row"><span>Truck</span><span>$95</span></div>
+        </div>
+        <a href="https://clienthub.getjobber.com/hubs/233a1a24-1848-47b3-af03-62f3a54d9aad/public/requests/4813943/new" target="_blank" class="btn-book">Book This Package</a>
+      </div>
+      <div class="package-card featured">
+        <div class="package-badge">Most Popular</div>
+        <div class="package-name">Boss Package</div>
+        <div class="package-subtitle">Full Interior & Exterior</div>
+        <ul class="package-features">
+          <li>Full exterior hand wash & foam spray</li>
+          <li>Rim, tire & fender well clean</li>
+          <li>Tire shine & hand dry</li>
+          <li>Full interior wipe-down</li>
+          <li>Vacuum + glass clean inside & out</li>
+          <li>Air freshener</li>
+        </ul>
+        <div class="package-pricing">
+          <div class="price-row"><span>Sedan</span><span>$140</span></div>
+          <div class="price-row"><span>SUV</span><span>$160</span></div>
+          <div class="price-row"><span>Truck / 3rd Row</span><span>$175</span></div>
+        </div>
+        <a href="https://clienthub.getjobber.com/hubs/233a1a24-1848-47b3-af03-62f3a54d9aad/public/requests/4813943/new" target="_blank" class="btn-book">Book This Package</a>
+      </div>
+      <div class="package-card">
+        <div class="package-name">CEO Package</div>
+        <div class="package-subtitle">Full Detail + Shampooing</div>
+        <ul class="package-features">
+          <li>Everything in Boss Package</li>
+          <li>Full interior shampoo (seats, floors, mats)</li>
+          <li>UV protection on all plastics & vinyl</li>
+        </ul>
+        <div class="package-pricing">
+          <div class="price-row"><span>Sedan</span><span>$200</span></div>
+          <div class="price-row"><span>SUV</span><span>$230</span></div>
+          <div class="price-row"><span>3rd Row</span><span>$250</span></div>
+          <div class="price-row"><span>Truck / Van</span><span>$275</span></div>
+        </div>
+        <a href="https://clienthub.getjobber.com/hubs/233a1a24-1848-47b3-af03-62f3a54d9aad/public/requests/4813943/new" target="_blank" class="btn-book">Book This Package</a>
+      </div>
+    </div>
+    <div style="text-align:center; margin-top:32px;">
+      <a href="#" onclick="showPage('services')" class="btn-secondary">See All Packages & Add-Ons →</a>
+    </div>
+  </section>
+
+  <!-- Hours band -->
+  <div class="hours-band">
+    <div>
+      <div class="section-label">Business Hours</div>
+      <div class="hours-title">When We're Available</div>
+      <p style="color:var(--muted);margin-top:12px;font-size:15px;">Call or text to confirm availability: <a href="tel:7575350285" style="color:var(--gold);">(757) 535-0285</a></p>
+    </div>
+    <div class="hours-grid">
+      <div class="hours-row"><span class="day">Monday</span><span class="time">8:00 AM – 6:00 PM</span></div>
+      <div class="hours-row"><span class="day">Tuesday</span><span class="time">8:00 AM – 6:00 PM</span></div>
+      <div class="hours-row"><span class="day">Wednesday</span><span class="time">8:00 AM – 6:00 PM</span></div>
+      <div class="hours-row"><span class="day">Thursday</span><span class="time">8:00 AM – 6:00 PM</span></div>
+      <div class="hours-row"><span class="day">Friday</span><span class="time">8:00 AM – 6:00 PM</span></div>
+      <div class="hours-row"><span class="day">Saturday</span><span class="time">8:00 AM – 5:00 PM</span></div>
+      <div class="hours-row"><span class="day">Sunday</span><span class="time">By Appointment</span></div>
+    </div>
+  </div>
+
+  <!-- CTA Section -->
+  <section style="text-align:center; padding: 96px 48px;">
+    <div class="section-label">Ready to Book?</div>
+    <h2 style="max-width:600px;margin:0 auto 20px;">Your Car Deserves<br>Better.</h2>
+    <p style="color:var(--muted);font-size:17px;max-width:440px;margin:0 auto 40px;">We serve all of Virginia Beach and the greater Hampton Roads area. Book online or give us a call.</p>
+    <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
+      <a href="https://clienthub.getjobber.com/hubs/233a1a24-1848-47b3-af03-62f3a54d9aad/public/requests/4813943/new" target="_blank" class="btn-primary">Book Online →</a>
+      <a href="tel:7575350285" class="btn-secondary">📞 (757) 535-0285</a>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-logo">CHOP'S <span>MOBILE</span> DETAILING</div>
+    <div class="footer-copy">© 2025 Chop's Mobile Detailing · Virginia Beach, VA · All rights reserved.</div>
+    <a href="tel:7575350285" class="footer-phone">(757) 535-0285</a>
+  </footer>
+</div>
+
+<!-- ══════════════ ABOUT PAGE ══════════════ -->
+<div id="page-about" class="page">
+  <div class="about-hero">
+    <div class="about-body">
+      <div class="section-label">About Us</div>
+      <h2>Built on<br>Real Work.</h2>
+      <p>At Chop's Mobile Detailing, we bring professional-grade car care directly to your home or workplace across the 757 Hampton Roads area.</p>
+      <p>Known for reliable service, attention to detail, and showroom-quality results, we specialize in interior and exterior detailing, paint correction, shampooing, ceramic coatings, and premium hand washes.</p>
+      <p>Our mission is simple — deliver convenience, quality, and customer satisfaction with every vehicle we service. Whether you need a quick refresh or a full detail restoration, we treat every vehicle like it's our own.</p>
+      <div style="margin-top:36px;">
+        <a href="https://clienthub.getjobber.com/hubs/233a1a24-1848-47b3-af03-62f3a54d9aad/public/requests/4813943/new" target="_blank" class="btn-primary">Book a Detail →</a>
+      </div>
+    </div>
+    <div class="about-img-block">
+      <div class="about-img-frame">
+        <img src="https://static.wixstatic.com/media/e5e0d2_4c1f908d99624e45ac3798207c81f462~mv2.png/v1/fill/w_450,h_470,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/e5e0d2_4c1f908d99624e45ac3798207c81f462~mv2.png" alt="Chop's Mobile Detailing company vehicle" onerror="this.style.display='none';this.parentElement.innerHTML='<div style=\'padding:48px;text-align:center;color:var(--muted);\'>🚐<br><br>Company Vehicle</div>'"/>
+      </div>
+      <div class="about-img-accent"></div>
+    </div>
+  </div>
+
+  <section style="padding-top:0">
+    <div class="section-label">Our Values</div>
+    <h2>What We Stand For</h2>
+    <div class="values-grid">
+      <div class="value-card">
+        <div class="value-icon">🎯</div>
+        <div class="value-title">Dependability</div>
+        <div class="value-desc">We show up when we say we will. Reliability isn't a bonus — it's the baseline.</div>
+      </div>
+      <div class="value-card">
+        <div class="value-icon">🔍</div>
+        <div class="value-title">Attention to Detail</div>
+        <div class="value-desc">Every vent, every seam, every panel. We don't rush and we don't skip.</div>
+      </div>
+      <div class="value-card">
+        <div class="value-icon">🤝</div>
+        <div class="value-title">Integrity</div>
+        <div class="value-desc">Honest pricing, honest work. We tell you what your car needs and we charge fairly for it.</div>
+      </div>
+      <div class="value-card">
+        <div class="value-icon">🏆</div>
+        <div class="value-title">Excellence</div>
+        <div class="value-desc">We're committed to exceeding expectations through workmanship and genuine care for every client.</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="hours-band">
+    <div>
+      <div class="section-label">Reach Out</div>
+      <div class="hours-title">Get In Touch</div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:12px;">
+      <div class="contact-detail" style="margin:0;">
+        <div class="contact-detail-icon">📞</div>
+        <div class="contact-detail-text">
+          <div class="label">Phone / Text</div>
+          <div class="value"><a href="tel:7575350285" style="color:var(--white);text-decoration:none;">(757) 535-0285</a></div>
+        </div>
+      </div>
+      <div class="contact-detail" style="margin:0;">
+        <div class="contact-detail-icon">✉️</div>
+        <div class="contact-detail-text">
+          <div class="label">Email</div>
+          <div class="value"><a href="mailto:chopsmobiledetailing@yahoo.com" style="color:var(--white);text-decoration:none;">chopsmobiledetailing@yahoo.com</a></div>
+        </div>
+      </div>
+      <div class="contact-detail" style="margin:0;">
+        <div class="contact-detail-icon">📍</div>
+        <div class="contact-detail-text">
+          <div class="label">Service Area</div>
+          <div class="value">Virginia Beach, VA · 757 Hampton Roads</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-logo">CHOP'S <span>MOBILE</span> DETAILING</div>
+    <div class="footer-copy">© 2025 Chop's Mobile Detailing · Virginia Beach, VA · All rights reserved.</div>
+    <a href="tel:7575350285" class="footer-phone">(757) 535-0285</a>
+  </footer>
+</div>
+
+<!-- ══════════════ SERVICES PAGE ══════════════ -->
+<div id="page-services" class="page">
+
+  <section>
+    <div class="section-label">Services & Pricing</div>
+    <h2>Every Package.<br>Every Price.</h2>
+    <p class="section-intro">All packages are performed on-site at your location. Call or text if the booking link isn't working: <a href="tel:7575350285" style="color:var(--gold);">(757) 535-0285</a></p>
+
+    <div class="packages-grid">
+      <!-- Maintenance Wash -->
+      <div class="package-card">
+        <div class="package-name">Maintenance Wash</div>
+        <div class="package-subtitle">Exterior Only</div>
+        <ul class="package-features">
+          <li>Scratch-free microfiber hand wash</li>
+          <li>Hand wash & foam spray</li>
+          <li>Rim faces, tires & fender wells</li>
+          <li>Bug & tar removal</li>
+          <li>Hand dry with microfiber towels</li>
+          <li>Tire shine</li>
+        </ul>
+        <div class="package-pricing">
+          <div class="price-row"><span>Sedan</span><span>$75</span></div>
+          <div class="price-row"><span>SUV</span><span>$85</span></div>
+          <div class="price-row"><span>Truck</span><span>$95</span></div>
+        </div>
+        <a href="https://clienthub.getjobber.com/hubs/233a1a24-1848-47b3-af03-62f3a54d9aad/public/requests/4813943/new" target="_blank" class="btn-book">Book This Package</a>
+      </div>
+
+      <!-- Wash & Wax -->
+      <div class="package-card">
+        <div class="package-name">Wash & Wax</div>
+        <div class="package-subtitle">Exterior + Wax Protection</div>
+        <ul class="package-features">
+          <li>All Maintenance Wash features</li>
+          <li>Interior surface wipe-down</li>
+          <li>Butter wet wax — hand applied</li>
+          <li>Tire shine</li>
+        </ul>
+        <div class="package-pricing">
+          <div class="price-row"><span>Sedan</span><span>$125</span></div>
+          <div class="price-row"><span>SUV</span><span>$140</span></div>
+          <div class="price-row"><span>Truck</span><span>$155</span></div>
+        </div>
+        <a href="https://clienthub.getjobber.com/hubs/233a1a24-1848-47b3-af03-62f3a54d9aad/public/requests/4813943/new" target="_blank" class="btn-book">Book This Package</a>
+      </div>
+
+      <!-- Interior Only -->
+      <div class="package-card">
+        <div class="package-name">Interior w/ Shampoo</div>
+        <div class="package-subtitle">Full Interior Only</div>
+        <ul class="package-features">
+          <li>Full interior wipe-down</li>
+          <li>Full shampoo — seats, floors, mats</li>
+          <li>Vacuum carpets, seats & trunk</li>
+          <li>UV protection on plastics & vinyl</li>
+          <li>All glass cleaned inside & out</li>
+          <li>Floor mats & air freshener</li>
+        </ul>
+        <div class="package-pricing">
+          <div class="price-row"><span>Sedan</span><span>$140</span></div>
+          <div class="price-row"><span>SUV</span><span>$160</span></div>
+          <div class="price-row"><span>3rd Row / Truck</span><span>$175</span></div>
+        </div>
+        <a href="https://clienthub.getjobber.com/hubs/233a1a24-1848-47b3-af03-62f3a54d9aad/public/requests/4813943/new" target="_blank" class="btn-book">Book This Package</a>
+      </div>
+
+      <!-- Boss -->
+      <div class="package-card featured">
+        <div class="package-badge">Most Popular</div>
+        <div class="package-name">Boss Package</div>
+        <div class="package-subtitle">Full Interior & Exterior</div>
+        <ul class="package-features">
+          <li>Scratch-free hand wash & foam spray</li>
+          <li>Rim, tire & fender well cleaning</li>
+          <li>Hand dry with microfiber towels</li>
+          <li>Tire shine</li>
+          <li>Full interior wipe-down (door jambs, cup holders)</li>
+          <li>All glass inside & out</li>
+          <li>Vacuum carpets, seats & trunk</li>
+          <li>Floor mats & air freshener</li>
+        </ul>
+        <div class="package-pricing">
+          <div class="price-row"><span>Sedan</span><span>$140</span></div>
+          <div class="price-row"><span>SUV</span><span>$160</span></div>
+          <div class="price-row"><span>3rd Row / Truck</span><span>$175</span></div>
+        </div>
+        <a href="https://clienthub.getjobber.com/hubs/233a1a24-1848-47b3-af03-62f3a54d9aad/public/requests/4813943/new" target="_blank" class="btn-book">Book This Package</a>
+      </div>
+
+      <!-- CEO -->
+      <div class="package-card">
+        <div class="package-name">CEO Package</div>
+        <div class="package-subtitle">Full Detail + Shampooing</div>
+        <ul class="package-features">
+          <li>Everything in Boss Package</li>
+          <li>Full interior shampoo (seats, floors, mats)</li>
+          <li>UV protection on all plastics & vinyl</li>
+        </ul>
+        <div class="package-pricing">
+          <div class="price-row"><span>Sedan</span><span>$200</span></div>
+          <div class="price-row"><span>SUV</span><span>$230</span></div>
+          <div class="price-row"><span>3rd Row</span><span>$250</span></div>
+          <div class="price-row"><span>Truck / Van</span><span>$275</span></div>
+        </div>
+        <a href="https://clienthub.getjobber.com/hubs/233a1a24-1848-47b3-af03-62f3a54d9aad/public/requests/4813943/new" target="_blank" class="btn-book">Book This Package</a>
+      </div>
+
+      <!-- Exclusive -->
+      <div class="package-card">
+        <div class="package-name">Chop's Exclusive</div>
+        <div class="package-subtitle">Full Detail + Steam + Clay Bar + 3-Month Wax</div>
+        <ul class="package-features">
+          <li>Everything in CEO Package</li>
+          <li>Full interior steam cleaning</li>
+          <li>Bug treatment & clay bar</li>
+          <li>3-month wax protection</li>
+        </ul>
+        <div class="package-pricing">
+          <div class="price-row"><span>Sedan</span><span>$400</span></div>
+          <div class="price-row"><span>SUV</span><span>$450</span></div>
+          <div class="price-row"><span>3rd Row</span><span>$475</span></div>
+          <div class="price-row"><span>Truck</span><span>$525</span></div>
+        </div>
+        <a href="https://clienthub.getjobber.com/hubs/233a1a24-1848-47b3-af03-62f3a54d9aad/public/requests/4813943/new" target="_blank" class="btn-book">Book This Package</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ADD-ONS -->
+  <section style="padding-top:0">
+    <div class="section-label">Add-Ons</div>
+    <h2>Customize Your Detail</h2>
+    <p class="section-intro">Add any of these to your package booking. Just mention it when you book.</p>
+    <div class="addons-grid">
+      <div class="addon-card">
+        <div class="addon-name">Butter Wet Wax</div>
+        <div class="addon-price">$60–$80</div>
+        <div class="addon-note">Sedan $60 · SUV $70 · Truck $80</div>
+      </div>
+      <div class="addon-card">
+        <div class="addon-name">Steam Cleaning</div>
+        <div class="addon-price">$125</div>
+        <div class="addon-note">Full interior steam treatment</div>
+      </div>
+      <div class="addon-card">
+        <div class="addon-name">Leather Conditioning</div>
+        <div class="addon-price">$40</div>
+        <div class="addon-note">Deep condition & protect leather seats</div>
+      </div>
+      <div class="addon-card">
+        <div class="addon-name">Dog Hair Removal</div>
+        <div class="addon-price">$60+</div>
+        <div class="addon-note">Heavy pet hair fee — price varies by severity</div>
+      </div>
+      <div class="addon-card">
+        <div class="addon-name">Hazard Fee</div>
+        <div class="addon-price">$60+</div>
+        <div class="addon-note">Vomit, blood, broken glass, pet urine, etc.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PAINT CORRECTION -->
+  <section style="padding-top:0">
+    <div class="section-label">Paint Correction</div>
+    <h2>Restore Your Paint</h2>
+    <p class="section-intro">Call or text to book paint correction. Pricing varies by vehicle size and condition.</p>
+    <div class="paint-grid">
+      <div class="paint-card">
+        <div class="paint-stage">Stage 1</div>
+        <div class="paint-name">Minor Correction</div>
+        <div class="paint-desc">Removes minor scratches, spider web marks, swirl marks, and paint transfer from the clear coat.</div>
+        <div class="paint-prices">
+          <div class="paint-price-row"><span>Sedan</span><span>$300</span></div>
+          <div class="paint-price-row"><span>SUV</span><span>$400</span></div>
+          <div class="paint-price-row"><span>Truck</span><span>$500</span></div>
+        </div>
+      </div>
+      <div class="paint-card" style="display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px;text-align:center;">
+        <div style="font-size:40px;">📞</div>
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:700;text-transform:uppercase;">Call for Stage 2 & 3</div>
+        <div style="color:var(--muted);font-size:14px;">Deep scratch removal and full paint restoration quoted on-site.</div>
+        <a href="tel:7575350285" class="btn-book" style="width:100%;">Call (757) 535-0285</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-logo">CHOP'S <span>MOBILE</span> DETAILING</div>
+    <div class="footer-copy">© 2025 Chop's Mobile Detailing · Virginia Beach, VA · All rights reserved.</div>
+    <a href="tel:7575350285" class="footer-phone">(757) 535-0285</a>
+  </footer>
+</div>
+
+<!-- ══════════════ CONTACT PAGE ══════════════ -->
+<div id="page-contact" class="page">
+
+  <div class="contact-layout">
+    <div class="contact-info">
+      <div class="section-label">Get In Touch</div>
+      <h2>Let's Get<br>Your Car<br>Cleaned.</h2>
+      <p style="color:var(--muted);margin-bottom:48px;font-size:17px;line-height:1.7;">Fill out the form to request a booking or ask a question. We'll get back to you fast. You can also call or text us directly.</p>
+
+      <div class="contact-detail">
+        <div class="contact-detail-icon">📞</div>
+        <div class="contact-detail-text">
+          <div class="label">Phone / Text</div>
+          <div class="value"><a href="tel:7575350285">(757) 535-0285</a></div>
+        </div>
+      </div>
+
+      <div class="contact-detail">
+        <div class="contact-detail-icon">✉️</div>
+        <div class="contact-detail-text">
+          <div class="label">Email</div>
+          <div class="value"><a href="mailto:chopsmobiledetailing@yahoo.com">chopsmobiledetailing@yahoo.com</a></div>
+        </div>
+      </div>
+
+      <div class="contact-detail">
+        <div class="contact-detail-icon">📍</div>
+        <div class="contact-detail-text">
+          <div class="label">Service Area</div>
+          <div class="value">Virginia Beach, VA<br>& Greater Hampton Roads</div>
+        </div>
+      </div>
+
+      <div class="contact-detail">
+        <div class="contact-detail-icon">🕐</div>
+        <div class="contact-detail-text">
+          <div class="label">Hours</div>
+          <div class="value">Mon–Fri: 8AM–6PM<br>Sat: 8AM–5PM · Sun: By Appt.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="contact-form" id="contact-form-wrap">
+      <div class="form-title">Request a Booking</div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>First Name</label>
+          <input type="text" placeholder="John" id="f-first"/>
+        </div>
+        <div class="form-group">
+          <label>Last Name</label>
+          <input type="text" placeholder="Smith" id="f-last"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Phone Number</label>
+        <input type="tel" placeholder="(757) 000-0000" id="f-phone"/>
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" placeholder="you@email.com" id="f-email"/>
+      </div>
+      <div class="form-group">
+        <label>Service Interested In</label>
+        <select id="f-service">
+          <option value="">Select a package...</option>
+          <option>Maintenance Wash</option>
+          <option>Wash & Wax</option>
+          <option>Interior w/ Shampoo</option>
+          <option>Boss Package</option>
+          <option>CEO Package</option>
+          <option>Chop's Exclusive</option>
+          <option>Paint Correction</option>
+          <option>Other / Not Sure</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Vehicle Type</label>
+        <select id="f-vehicle">
+          <option value="">Select vehicle type...</option>
+          <option>Sedan / Coupe</option>
+          <option>SUV / Crossover</option>
+          <option>Truck</option>
+          <option>Van / Minivan (3rd Row)</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Message / Questions</label>
+        <textarea placeholder="Your location, preferred date/time, any special requests..." id="f-message"></textarea>
+      </div>
+      <button class="form-submit" onclick="submitForm()">Send Message →</button>
+
+      <div class="form-success" id="form-success">
+        <div class="check">✅</div>
+        <h3>Message Sent!</h3>
+        <p style="color:var(--muted);">We'll reach out to confirm your booking details within 24 hours. Or give us a call at <a href="tel:7575350285" style="color:var(--gold);">(757) 535-0285</a> for faster service.</p>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-logo">CHOP'S <span>MOBILE</span> DETAILING</div>
+    <div class="footer-copy">© 2025 Chop's Mobile Detailing · Virginia Beach, VA · All rights reserved.</div>
+    <a href="tel:7575350285" class="footer-phone">(757) 535-0285</a>
+  </footer>
+</div>
+
+<script>
+  function showPage(page) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById('page-' + page).classList.add('active');
+    document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+    const navEl = document.getElementById('nav-' + page);
+    if (navEl) navEl.classList.add('active');
+    window.scrollTo(0, 0);
+  }
+
+  function toggleMenu() {
+    document.getElementById('mobile-menu').classList.toggle('open');
+  }
+
+  function submitForm() {
+    const first = document.getElementById('f-first').value.trim();
+    const phone = document.getElementById('f-phone').value.trim();
+    if (!first || !phone) {
+      alert('Please enter at least your name and phone number so we can reach you.');
+      return;
+    }
+    document.getElementById('contact-form-wrap').querySelector('.form-title').style.display = 'none';
+    document.getElementById('contact-form-wrap').querySelectorAll('.form-group, .form-row, .form-submit').forEach(el => el.style.display = 'none');
+    document.getElementById('form-success').style.display = 'block';
+  }
+</script>
+
+</body>
+</html>
